@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحسب عمرك لكأس العالم لعام 2034</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Cairo', Arial, sans-serif;
+            direction: rtl;
+            background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: black;
+            font-weight: 600;
+            margin-top: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-top: 10px;
+            color: black;
+        }
+
+        select, button {
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 100%;
+            max-width: 300px;
+            background-color: #ffffff;
+            transition: transform 0.3s ease-in-out;
+            font-weight: bold;
+        }
+
+        select:focus, button:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.8);
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>أحسب عمرك لكأس العالم لعام 2034</h1>
+        <p>اختر تاريخ ميلادك:</p>
+        <select id="year">
+            <option value="">السنة</option>
+            <script>
+                for (let i = 1900; i <= new Date().getFullYear(); i++) {
+                    document.write('<option value="' + i + '">' + i + '</option>');
+                }
+            </script>
+        </select>
+        <select id="month" onchange="updateDays()">
+            <option value="">الشهر</option>
+            <script>
+                for (let i = 1; i <= 12; i++) {
+                    document.write('<option value="' + i + '">' + i + '</option>');
+                }
+            </script>
+        </select>
+        <select id="day">
+            <option value="">اليوم</option>
+        </select>
+        <button onclick="calculateAge()">أحسب عمرك</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function updateDays() {
+            const daySelect = document.getElementById('day');
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+            const daysInMonth = new Date(year, month, 0).getDate();
+
+            daySelect.innerHTML = '<option value="">اليوم</option>';
+            for (let i = 1; i <= daysInMonth; i++) {
+                daySelect.innerHTML += '<option value="' + i + '">' + i + '</option>';
+            }
+        }
+
+        function calculateAge() {
+            const day = document.getElementById('day').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+
+            if (day && month && year) {
+                const birthDate = new Date(year, month - 1, day);
+                const worldCupDate = new Date(2034, 5, 1); // Assuming World Cup starts in June 2034
+                let age = worldCupDate.getFullYear() - birthDate.getFullYear();
+                const m = worldCupDate.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && worldCupDate.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                document.getElementById('result').innerText = 'عمرك في كأس العالم 2034 سيكون: ' + age + ' سنة';
+            } else {
+                document.getElementById('result').innerText = 'يرجى اختيار تاريخ ميلادك بالكامل.';
+            }
+        }
+    </script>
+</body>
+</html>
